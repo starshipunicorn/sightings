@@ -51,7 +51,7 @@ def calculate_total(order, discount=0, fee=0):
     return round(subtotal, 2), round(total, 2)
 
 # Streamlit Interface
-st.title("🚀 Space-Themed Menu Calculator 🌌")
+st.title("🚀 Sightings Calculator 🌌")
 
 st.sidebar.title("Settings")
 discount = st.sidebar.slider("Discount (%)", 0, 100, 0)
