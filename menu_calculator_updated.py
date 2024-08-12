@@ -51,15 +51,17 @@ def calculate_total(order, discount=0, fee=0):
     return round(total, 2)
 
 # Streamlit Interface
-st.title("🚀 Sightings Menu Calculator 🌌")
+st.title("🚀 Space-Themed Menu Calculator 🌌")
 
 st.sidebar.title("Settings")
 discount = st.sidebar.slider("Discount (%)", 0, 100, 0)
 fee = st.sidebar.slider("Additional Fee (%)", 0, 100, 0)
 
 order = {}
+
 cols = st.columns(2)
 
+# First row
 with cols[0]:
     st.subheader("🌅 Breakfast")
     for item, price in menu["Breakfast"].items():
@@ -74,30 +76,41 @@ with cols[1]:
         if quantity > 0:
             order[("Starters", item)] = quantity
 
-st.subheader("🍽️ Mains")
-for item, price in menu["Mains"].items():
-    quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=10, step=1, key=item)
-    if quantity > 0:
-        order[("Mains", item)] = quantity
+# Second row
+cols = st.columns(2)
 
-st.subheader("🍰 Desserts")
-for item, price in menu["Desserts"].items():
-    quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=10, step=1, key=item)
-    if quantity > 0:
-        order[("Desserts", item)] = quantity
+with cols[0]:
+    st.subheader("🍽️ Mains")
+    for item, price in menu["Mains"].items():
+        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=10, step=1, key=item)
+        if quantity > 0:
+            order[("Mains", item)] = quantity
 
-st.subheader("🍹 Alcoholic Drinks")
-for item, price in menu["Alcoholic Drinks"].items():
-    quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=10, step=1, key=item)
-    if quantity > 0:
-        order[("Alcoholic Drinks", item)] = quantity
+with cols[1]:
+    st.subheader("🍰 Desserts")
+    for item, price in menu["Desserts"].items():
+        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=10, step=1, key=item)
+        if quantity > 0:
+            order[("Desserts", item)] = quantity
 
-st.subheader("🥤 Non-Alcoholic Drinks")
-for item, price in menu["Non-Alcoholic Drinks"].items():
-    quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=10, step=1, key=item)
-    if quantity > 0:
-        order[("Non-Alcoholic Drinks", item)] = quantity
+# Third row
+cols = st.columns(2)
+
+with cols[0]:
+    st.subheader("🍹 Alcoholic Drinks")
+    for item, price in menu["Alcoholic Drinks"].items():
+        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=10, step=1, key=item)
+        if quantity > 0:
+            order[("Alcoholic Drinks", item)] = quantity
+
+with cols[1]:
+    st.subheader("🥤 Non-Alcoholic Drinks")
+    for item, price in menu["Non-Alcoholic Drinks"].items():
+        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=10, step=1, key=item)
+        if quantity > 0:
+            order[("Non-Alcoholic Drinks", item)] = quantity
 
 if st.button("Calculate Total"):
     total_price = calculate_total(order, discount=discount, fee=fee)
     st.markdown(f"## 🧾 The total price of the order is: **${total_price}**")
+
