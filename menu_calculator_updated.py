@@ -43,15 +43,15 @@ def calculate_total(order, discount=0, fee=0):
         subtotal += menu[item[0]][item[1]] * quantity
 
     discount_amount = subtotal * (discount / 100)
-    subtotal -= discount_amount
+    subtotal_after_discount = subtotal - discount_amount
 
-    fee_amount = subtotal * (fee / 100)
-    total = subtotal + fee_amount
+    fee_amount = subtotal_after_discount * (fee / 100)
+    total = subtotal_after_discount + fee_amount
 
-    return round(total, 2)
+    return round(subtotal, 2), round(total, 2)
 
 # Streamlit Interface
-st.title("🚀 Sightings Menu Calculator 🌌")
+st.title("🚀 Space-Themed Menu Calculator 🌌")
 
 st.sidebar.title("Settings")
 discount = st.sidebar.slider("Discount (%)", 0, 100, 0)
@@ -111,6 +111,11 @@ with cols[1]:
             order[("Non-Alcoholic Drinks", item)] = quantity
 
 if st.button("Calculate Total"):
-    total_price = calculate_total(order, discount=discount, fee=fee)
+    subtotal, total_price = calculate_total(order, discount=discount, fee=fee)
+    st.markdown(f"## Subtotal: **${subtotal}**")
     st.markdown(f"## 🧾 The total price of the order is: **${total_price}**")
+    
+    st.subheader("Order Summary")
+    for (category, item), quantity in order.items():
+        st.markdown(f"- {item} ({category}): {quantity} @ ${menu[category][item]} each")
 
