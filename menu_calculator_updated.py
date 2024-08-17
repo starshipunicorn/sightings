@@ -65,14 +65,14 @@ cols = st.columns(2)
 with cols[0]:
     st.subheader("🌅 Breakfast")
     for item, price in menu["Breakfast"].items():
-        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=10, step=1, key=item)
+        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=500, step=1, key=item)
         if quantity > 0:
             order[("Breakfast", item)] = quantity
 
 with cols[1]:
     st.subheader("🍲 Starters")
     for item, price in menu["Starters"].items():
-        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=10, step=1, key=item)
+        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=500, step=1, key=item)
         if quantity > 0:
             order[("Starters", item)] = quantity
 
@@ -82,14 +82,14 @@ cols = st.columns(2)
 with cols[0]:
     st.subheader("🍽️ Mains")
     for item, price in menu["Mains"].items():
-        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=10, step=1, key=item)
+        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=500, step=1, key=item)
         if quantity > 0:
             order[("Mains", item)] = quantity
 
 with cols[1]:
     st.subheader("🍰 Desserts")
     for item, price in menu["Desserts"].items():
-        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=10, step=1, key=item)
+        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=500, step=1, key=item)
         if quantity > 0:
             order[("Desserts", item)] = quantity
 
@@ -99,14 +99,14 @@ cols = st.columns(2)
 with cols[0]:
     st.subheader("🍹 Alcoholic Drinks")
     for item, price in menu["Alcoholic Drinks"].items():
-        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=10, step=1, key=item)
+        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=500, step=1, key=item)
         if quantity > 0:
             order[("Alcoholic Drinks", item)] = quantity
 
 with cols[1]:
     st.subheader("🥤 Non-Alcoholic Drinks")
     for item, price in menu["Non-Alcoholic Drinks"].items():
-        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=10, step=1, key=item)
+        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=500, step=1, key=item)
         if quantity > 0:
             order[("Non-Alcoholic Drinks", item)] = quantity
 
@@ -118,4 +118,3 @@ if st.button("Calculate Total"):
     st.subheader("Order Summary")
     for (category, item), quantity in order.items():
         st.markdown(f"- {item} ({category}): {quantity} @ ${menu[category][item]} each")
-
