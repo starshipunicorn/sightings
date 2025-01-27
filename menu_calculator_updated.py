@@ -19,7 +19,7 @@ menu = {
         "Galaxy Guac Burger and Meteorite Fries": 122.50
     },
     "Desserts": {
-        "Spacecraft S’mores Shake": 950,
+        "Spacecraft S’mores Shake": 1000,
         "Blackhole Brownies": 66.50,
         "Martian Mousse": 73.50
     },
