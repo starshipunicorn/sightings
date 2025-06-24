@@ -1,6 +1,6 @@
 import streamlit as st
 
-# Menu from Sightings
+# 🛸 Menu based on Sightings image
 menu = {
     "Breakfast": {
         "Supernova Breakfast Sandwich": 110,
@@ -36,7 +36,7 @@ menu = {
     }
 }
 
-# Calculate pricing
+# 🧮 Total Calculation Logic
 def calculate_total(order, discount=0, fee=0):
     subtotal = sum(menu[cat][item] * qty for (cat, item), qty in order.items())
     discount_amt = subtotal * (discount / 100)
@@ -44,8 +44,9 @@ def calculate_total(order, discount=0, fee=0):
     total = subtotal - discount_amt + fee_amt
     return round(subtotal, 2), round(total, 2)
 
-# App layout
-st.title("👽 Sightings Intergalactic Order Calculator 🛸")
+# 🌌 App Layout
+st.set_page_config(page_title="Sightings Calculator", layout="centered")
+st.title("👽 Sightings Order Calculator 🛸")
 st.markdown("_ExtraTerrestrial Flavors & Comfort Bites_")
 
 st.sidebar.title("🛠️ Settings")
@@ -54,34 +55,30 @@ fee = st.sidebar.slider("Service Fee (%)", 0, 100, 0)
 
 order = {}
 
-sections = list(menu.keys())
-icons = {
-    "Breakfast": "🥓",
-    "Main Dishes": "🌮",
-    "Desserts": "🍰",
-    "Beverages": "🥤",
-    "Extras": "🧪"
-}
+# 📱 Mobile-Friendly Expandable Sections
+sections_ordered = [
+    ("Breakfast", "🥓"),
+    ("Main Dishes", "🌮"),
+    ("Desserts", "🍰"),
+    ("Beverages", "🥤"),
+    ("Extras", "🧪")
+]
 
-# Create 2-column layout
-for i in range(0, len(sections), 2):
-    cols = st.columns(2)
-    for j in range(2):
-        if i + j < len(sections):
-            section = sections[i + j]
-            with cols[j]:
-                st.subheader(f"{icons.get(section, '')} {section}")
-                for item, price in menu[section].items():
-                    qty = st.number_input(f"{item} (${price})", min_value=0, max_value=500, step=1, key=item)
-                    if qty > 0:
-                        order[(section, item)] = qty
+for section, icon in sections_ordered:
+    with st.expander(f"{icon} {section}", expanded=True):
+        for item, price in menu[section].items():
+            qty = st.number_input(f"{item} (${price})", min_value=0, max_value=500, step=1, key=f"{section}_{item}")
+            if qty > 0:
+                order[(section, item)] = qty
 
-# Show total on button
+# 🚀 Calculate Button
 if st.button("🚀 Calculate Total"):
     subtotal, total = calculate_total(order, discount, fee)
+
+    st.markdown("---")
     st.markdown(f"### 🌌 Subtotal: **${subtotal}**")
     st.markdown(f"### 💫 Total After Discounts/Fees: **${total}**")
 
     st.subheader("📦 Order Summary")
     for (cat, item), qty in order.items():
-        st.markdown(f"- {item} ({cat}) x {qty} @ ${menu[cat][item]} each")
+        st.markdown(f"- **{item}** ({cat}) × {qty} @ ${menu[cat][item]} each")
