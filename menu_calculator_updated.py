@@ -1,120 +1,87 @@
 import streamlit as st
 
-# Menu Items with their Prices
+# Menu from Sightings
 menu = {
     "Breakfast": {
-        "Crater Cinnamon Roll Pancakes": 73.50,
-        "Nebula Nosh Chicken & Waffles": 115.50,
-        "Extraterrestrial Omelet": 87.50
+        "Supernova Breakfast Sandwich": 110,
+        "Crater Cinnamon Roll Pancakes": 75,
+        "Nebula Nosh Chicken & Waffles": 120
     },
-    "Starters": {
-        "Celestial Caesar Salad": 70.00,
-        "Alien Antenna Bites": 98.00,
-        "Orbiting Onion Rings": 52.50
-    },
-    "Mains": {
-        "Celestial Creature Gyro": 115.50,
-        "Andromeda Invader Curry": 105.00,
-        "Planetary Pizza": 95.00,
-        "Galaxy Guac Burger and Meteorite Fries": 122.50
+    "Main Dishes": {
+        "Galaxy Guac Burger": 125,
+        "Cosmic Corndog": 85,
+        "Andromeda Invader Curry": 105,
+        "Protostar Pulled Pork Sandwich": 125,
+        "Planetary Pizza": 95,
+        "Big Dipper Birria Tacos": 95
     },
     "Desserts": {
-        "Spacecraft S’mores Shake": 450,
-        "Blackhole Brownies": 66.50,
-        "Martian Mousse": 73.50
+        "Martian Mousse": 75,
+        "Black Hole Brownies": 70,
+        "Pie in the Sky": 75,
+        "Astronaut Ice Cream": 75,
+        "Chocolate Milky Way": 75,
+        "Spacecraft S’mores Shake": 450
     },
-    "Alcoholic Drinks": {
-        "UFO Umbrella Drink": 50.00,
-        "Asteroid Amaretto Sour": 57.50,
-        "Alien Ambrosia": 62.50
+    "Beverages": {
+        "Starlight Lemonade": 28,
+        "Lunar Lemonade": 27,
+        "Galactic Grape Soda": 27,
+        "Nebula Nectar Cola": 27,
+        "Horchata": 30,
+        "Comet Cola Float": 52
     },
-    "Non-Alcoholic Drinks": {
-        "Lunar Lemonade": 27.50,
-        "Comet Cola Float": 32.50,
-        "Galactic Grape Cola": 27.50,
-        "Nebula Nectar Cola": 27.50
+    "Extras": {
+        "Preservatives": 50
     }
 }
 
-# Function to calculate total price
+# Calculate pricing
 def calculate_total(order, discount=0, fee=0):
-    subtotal = 0
-    for item, quantity in order.items():
-        subtotal += menu[item[0]][item[1]] * quantity
-
-    discount_amount = subtotal * (discount / 100)
-    subtotal_after_discount = subtotal - discount_amount
-
-    fee_amount = subtotal_after_discount * (fee / 100)
-    total = subtotal_after_discount + fee_amount
-
+    subtotal = sum(menu[cat][item] * qty for (cat, item), qty in order.items())
+    discount_amt = subtotal * (discount / 100)
+    fee_amt = (subtotal - discount_amt) * (fee / 100)
+    total = subtotal - discount_amt + fee_amt
     return round(subtotal, 2), round(total, 2)
 
-# Streamlit Interface
-st.title("🚀 Sightings Calculator 🌌")
+# App layout
+st.title("👽 Sightings Intergalactic Order Calculator 🛸")
+st.markdown("_ExtraTerrestrial Flavors & Comfort Bites_")
 
-st.sidebar.title("Settings")
+st.sidebar.title("🛠️ Settings")
 discount = st.sidebar.slider("Discount (%)", 0, 100, 0)
-fee = st.sidebar.slider("Additional Fee (%)", 0, 100, 0)
+fee = st.sidebar.slider("Service Fee (%)", 0, 100, 0)
 
 order = {}
 
-cols = st.columns(2)
+sections = list(menu.keys())
+icons = {
+    "Breakfast": "🥓",
+    "Main Dishes": "🌮",
+    "Desserts": "🍰",
+    "Beverages": "🥤",
+    "Extras": "🧪"
+}
 
-# First row
-with cols[0]:
-    st.subheader("🌅 Breakfast")
-    for item, price in menu["Breakfast"].items():
-        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=500, step=1, key=item)
-        if quantity > 0:
-            order[("Breakfast", item)] = quantity
+# Create 2-column layout
+for i in range(0, len(sections), 2):
+    cols = st.columns(2)
+    for j in range(2):
+        if i + j < len(sections):
+            section = sections[i + j]
+            with cols[j]:
+                st.subheader(f"{icons.get(section, '')} {section}")
+                for item, price in menu[section].items():
+                    qty = st.number_input(f"{item} (${price})", min_value=0, max_value=500, step=1, key=item)
+                    if qty > 0:
+                        order[(section, item)] = qty
 
-with cols[1]:
-    st.subheader("🍲 Starters")
-    for item, price in menu["Starters"].items():
-        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=500, step=1, key=item)
-        if quantity > 0:
-            order[("Starters", item)] = quantity
+# Show total on button
+if st.button("🚀 Calculate Total"):
+    subtotal, total = calculate_total(order, discount, fee)
+    st.markdown(f"### 🌌 Subtotal: **${subtotal}**")
+    st.markdown(f"### 💫 Total After Discounts/Fees: **${total}**")
 
-# Second row
-cols = st.columns(2)
-
-with cols[0]:
-    st.subheader("🍽️ Mains")
-    for item, price in menu["Mains"].items():
-        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=500, step=1, key=item)
-        if quantity > 0:
-            order[("Mains", item)] = quantity
-
-with cols[1]:
-    st.subheader("🍰 Desserts")
-    for item, price in menu["Desserts"].items():
-        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=500, step=1, key=item)
-        if quantity > 0:
-            order[("Desserts", item)] = quantity
-
-# Third row
-cols = st.columns(2)
-
-with cols[0]:
-    st.subheader("🍹 Alcoholic Drinks")
-    for item, price in menu["Alcoholic Drinks"].items():
-        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=500, step=1, key=item)
-        if quantity > 0:
-            order[("Alcoholic Drinks", item)] = quantity
-
-with cols[1]:
-    st.subheader("🥤 Non-Alcoholic Drinks")
-    for item, price in menu["Non-Alcoholic Drinks"].items():
-        quantity = st.number_input(f"{item} (${price})", min_value=0, max_value=500, step=1, key=item)
-        if quantity > 0:
-            order[("Non-Alcoholic Drinks", item)] = quantity
-
-if st.button("Calculate Total"):
-    subtotal, total_price = calculate_total(order, discount=discount, fee=fee)
-    st.markdown(f"## Subtotal: **${subtotal}**")
-    st.markdown(f"## 🧾 The total price of the order is: **${total_price}**")
-    
-    st.subheader("Order Summary")
-    for (category, item), quantity in order.items():
-        st.markdown(f"- {item} ({category}): {quantity} @ ${menu[category][item]} each")
+    st.subheader("📦 Order Summary")
+    for (cat, item), qty in order.items():
+        st.markdown(f"- {item} ({cat}) x {qty} @ ${menu[cat][item]} each")
