@@ -21,7 +21,7 @@ menu = {
         "Pie in the Sky": 75,
         "Astronaut Ice Cream": 75,
         "Chocolate Milky Way": 75,
-        "Spacecraft S’mores Shake": 450
+        "Spacecraft S’mores Shake": 300
     },
     "Beverages": {
         "Starlight Lemonade": 28,
@@ -82,3 +82,4 @@ if st.button("🚀 Calculate Total"):
     st.subheader("📦 Order Summary")
     for (cat, item), qty in order.items():
         st.markdown(f"- **{item}** ({cat}) × {qty} @ ${menu[cat][item]} each")
+
