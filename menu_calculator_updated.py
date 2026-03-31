@@ -2,37 +2,43 @@ import streamlit as st
 
 # 🛸 Menu based on Sightings image
 menu = {
-    "Breakfast": {
-        "Supernova Breakfast Sandwich": 110,
-        "Crater Cinnamon Roll Pancakes": 75,
-        "Nebula Nosh Chicken & Waffles": 120
+    "Snackies": {
+        "Classic Cheesecake": 95,
+        "Molten Lava Cake": 95,
+        "Brown Butter Blondie": 95,
+        "Ice Cream Flight": 95,
+        "Warm Choccy Chip Cookies": 95,
+        "Starry S'More Shake": 200
     },
-    "Main Dishes": {
-        "Galaxy Guac Burger": 125,
-        "Cosmic Corndog": 85,
-        "Andromeda Invader Curry": 105,
-        "Protostar Pulled Pork Sandwich": 125,
-        "Planetary Pizza": 95,
-        "Big Dipper Birria Tacos": 95
+    "Cronches": {
+        "Smash Burger": 120,
+        "Pulled Pork Sandwich": 120,
+        "Buffalo Wings": 100,
+        "Onion Rings": 95,
+        "Pepperoni Flatbread": 110,
+        "Mac & Cheese Bites": 100,
+        "Loaded Nachos": 100,
+        "BBQ Chicken Sandwich": 120,
+        "Veggie Burger": 120,
+        "Mozzarella Sticks": 100,
+        "Street Tacos": 100
     },
-    "Desserts": {
-        "Martian Mousse": 75,
-        "Black Hole Brownies": 70,
-        "Pie in the Sky": 75,
-        "Astronaut Ice Cream": 75,
-        "Chocolate Milky Way": 75,
-        "Spacecraft S’mores Shake": 300
+    "Drinkies": {
+        "Zero-G Cola": 50,
+        "Dark Cherry Spritz": 50,
+        "House Iced Tea": 50,
+        "Mineral Water": 50,
+        "Late Shift": 50,
+        "Galactic Grape Soda": 50
     },
-    "Beverages": {
-        "Starlight Lemonade": 28,
-        "Lunar Lemonade": 27,
-        "Galactic Grape Soda": 27,
-        "Nebula Nectar Cola": 27,
-        "Horchata": 30,
-        "Comet Cola Float": 52
+    "Fun Drinkies": {
+        "Vodka Soda": 120,
+        "Draft Lager": 100,
+        "Gin & Tonic": 100,
+        "Midnight Martini": 120
     },
     "Extras": {
-        "Preservatives": 50
+        "Preservatives": 100
     }
 }
 
@@ -45,9 +51,9 @@ def calculate_total(order, discount=0, fee=0):
     return round(subtotal, 2), round(total, 2)
 
 # 🌌 App Layout
-st.set_page_config(page_title="Sightings Calculator", layout="centered")
-st.title("👽 Sightings Order Calculator 🛸")
-st.markdown("_ExtraTerrestrial Flavors & Comfort Bites_")
+st.set_page_config(page_title="WTF Calculator", layout="centered")
+st.title("👽 WTF Order Calculator 🛸")
+st.markdown("_Well That's Fire_")
 
 st.sidebar.title("🛠️ Settings")
 discount = st.sidebar.slider("Discount (%)", 0, 100, 0)
@@ -57,10 +63,10 @@ order = {}
 
 # 📱 Mobile-Friendly Expandable Sections
 sections_ordered = [
-    ("Breakfast", "🥓"),
-    ("Main Dishes", "🌮"),
-    ("Desserts", "🍰"),
-    ("Beverages", "🥤"),
+    ("Snackies", "🥓"),
+    ("Cronches", "🌮"),
+    ("Drinkies", "🍰"),
+    ("Fun Drinkies", "🥤"),
     ("Extras", "🧪")
 ]
 
