@@ -65,8 +65,8 @@ order = {}
 sections_ordered = [
     ("Snackies", "🥓"),
     ("Cronches", "🌮"),
-    ("Drinkies", "🍰"),
-    ("Fun Drinkies", "🥤"),
+    ("Drinkies", "🥤"),
+    ("Fun Drinkies", "🍸"),
     ("Extras", "🧪")
 ]
 
